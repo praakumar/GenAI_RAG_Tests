@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GMAT Question Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .question-box {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        #response {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f0f0f0;
+        }
+        .loading {
+            display: none;
+            color: #666;
+            font-style: italic;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>GMAT Question Generator</h1>
+    <div class="question-box">
+        <button onclick="getQuestion()">Generate New Question</button>
+        <div id="loading" class="loading">Processing your request...</div>
+        <div id="response"></div>
+    </div>
+
+    <script>
+        function getQuestion() {
+            const loading = document.getElementById('loading');
+            const response = document.getElementById('response');
+            
+            loading.style.display = 'block';
+            response.innerHTML = '';
+            
+            fetch('/ask', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    question: "Generate a new GMAT question with its solution"
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                loading.style.display = 'none';
+                if (data.status === 'success') {
+                    response.innerHTML = data.answer;
+                } else {
+                    response.innerHTML = `<div class="error">${data.answer}</div>`;
+                }
+            })
+            .catch(error => {
+                loading.style.display = 'none';
+                response.innerHTML = '<div class="error">An error occurred while fetching the question.</div>';
+            });
+        }
+    </script>
+</body>
+</html>
