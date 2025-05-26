@@ -1,0 +1,9 @@
+ragas==0.1.10 
+datasets==2.20.0 
+openai==1.31.1 
+transformers==4.44.2 
+pandas==2.2.2 
+langchain==0.2.2 
+langchain-openai==0.1.8 
+langchain-community==0.2.3 
+langchain-text-splitters==0.2.2
