@@ -10,8 +10,9 @@ from ragas import testset
 from ragas.testset.generator import TestsetGenerator
 from ragas.testset.evolutions import simple, reasoning, multi_context
 
+
 # Open and read the OPENAI_API_KEY 
-with open('configs\secrets\secrets.json', 'r') as file:
+with open(r'.\configs\secrets\secrets.json', 'r') as file:
     configs = json.load(file)
 os.environ["OPENAI_API_KEY"] = configs['OPENAI_API_KEY']
 openai.api_key = os.environ['OPENAI_API_KEY']
@@ -20,7 +21,7 @@ openai.api_key = os.environ['OPENAI_API_KEY']
 pages = []
 from langchain_community.document_loaders import TextLoader
 
-loader = TextLoader("data\sample.txt", encoding = 'UTF-8')
+loader = TextLoader(r".\data\sample.txt", encoding = 'UTF-8')
 # load and split the file into pages
 local_pages = loader.load_and_split() 
 pages.extend(local_pages)
@@ -58,7 +59,7 @@ try:
 
     #  Export results in CSV / Excel (optional)
     timestamp =datetime.now()
-    csv_file_name = ".\export\synthetic_data_test_set"+timestamp.strftime("_%m_%d_%Y_ %H_%M_%S")+".csv"
+    csv_file_name = r".\export\synthetic_data_test_set"+timestamp.strftime("_%m_%d_%Y_ %H_%M_%S")+".csv"
     print(csv_file_name)
     # get results in csv
     test_df.to_csv(csv_file_name, index=False)
